@@ -2,82 +2,61 @@ import { connect } from './DatabaseConnection';
 
 class DatabaseMethods {
 
-    // Método para ejecutar INSERT, UPDATE o DELETE
+    // Ejecuta INSERT, UPDATE o DELETE
     static async save(sql: { query: string; params: any[] }) {
         let connection;
         try {
-            // Se crea la conexión a la base de datos
-            connection = await connect();
-
-            // Se ejecuta la query con los parámetros recibidos
-            await connection.execute(sql.query, sql.params);
-
-            return { error: false, msg: "Query executed" };
+            connection = await connect(); // Crear conexion
+            await connection.execute(sql.query, sql.params); // Ejecutar query
+            return { error: false, msg: "Query executed" }; // Exito
         } 
         catch (error: any) {
-            // Error durante la ejecución de la query
-            console.log("ERROR EN QUERY (save):", error);
+            console.log("ERROR EN QUERY (save):", error); // Log error
             return { error: true, msg: error.message };
         } 
         finally {
-            // Se cierra la conexión si existe
-            if (connection) connection.end();
+            if (connection) connection.end(); // Cerrar conexion
         }
     }
 
-    // Método para SELECT (devuelve resultados; usado para login, etc.)
+    // Ejecuta SELECT y devuelve resultados
     static async read(sql: { query: string; params: any[] }) {
         let connection;
         try {
-            // Se establece la conexión
-            connection = await connect();
-
-            // .execute retorna [rows, fields]; solo ocupamos rows
-            const [rows] = await connection.execute(sql.query, sql.params);
-
-            return { error: false, result: rows };
+            connection = await connect(); // Crear conexion
+            const [rows] = await connection.execute(sql.query, sql.params); // Ejecutar SELECT
+            return { error: false, result: rows }; // Devolver resultados
         } 
         catch (error: any) {
-            // Error durante el SELECT
-            console.log("ERROR EN QUERY (read):", error);
+            console.log("ERROR EN QUERY (read):", error); // Log error
             return { error: true, msg: error.message, result: [] };
         } 
         finally {
-            // Se cierra la conexión
-            if (connection) connection.end();
+            if (connection) connection.end(); // Cerrar conexion
         }
     }
 
-    // Método para transacciones (varias queries que deben ejecutarse juntas)
+    // Ejecuta varias queries dentro de una transaccion
     static async save_transaction(queries: { query: string; params: any[] }[]) {
         let connection;
         try {
-            // Se inicia la conexión y la transacción
-            connection = await connect();
-            await connection.beginTransaction();
+            connection = await connect(); // Crear conexion
+            await connection.beginTransaction(); // Iniciar transaccion
 
-            // Ejecución de cada una de las queries dentro de la transacción
             for (let sql of queries) {
-                await connection.execute(sql.query, sql.params);
+                await connection.execute(sql.query, sql.params); // Ejecutar cada query
             }
 
-            // Si todas fueron exitosas, se confirma la transacción
-            await connection.commit();
-
+            await connection.commit(); // Confirmar cambios
             return { error: false, msg: 'queries_executed' };
         } 
         catch (error: any) {
-            // Error dentro de la transacción
-            console.log("ERROR EN QUERY (transaction):", error);
-
-            // Se revierte todo lo ejecutado
-            if (connection) await connection.rollback();
-
+            console.log("ERROR EN QUERY (transaction):", error); // Log error
+            if (connection) await connection.rollback(); // Revertir transaccion
             return { error: true, msg: error.message };
         } 
         finally {
-            // Se cierra la conexión siempre
-            if (connection) connection.end();
+            if (connection) connection.end(); // Cerrar conexion
         }
     }
 }

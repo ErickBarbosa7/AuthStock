@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# --- SOLUCIÓN PARA EL TOKEN ---
+# Estas dos líneas capturan el token y obligan a pasarlo a PHP
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# --- TU REDIRECCIÓN ACTUAL ---
+# Redirige todo a public/index.php
+RewriteCond %{REQUEST_URI} !^/$
+RewriteRule ^ public/index.php [L]
