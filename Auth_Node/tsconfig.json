@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    //"rootDir": "./src",
+    "outDir": "./dist",
+    "module": "commonjs",     // <--- Esto es lo que usa tu otro proyecto
+    "target": "es2016",
+    "types": ["node"],
+    "strict": true,
+    "esModuleInterop": true,  // Permite usar "import" aunque sea CommonJS
+    "skipLibCheck": true      // Evita errores raros de librerías externas
+  }
+}
