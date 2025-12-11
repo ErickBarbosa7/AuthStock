@@ -39,20 +39,19 @@ class ProductController {
 
     // PUT: Actualizar producto existente
     public function update($data) {
-        if(!isset($data->id)) {
+        // 1. Validar que tengamos el ID
+        if (!isset($data->id)) {
             return ["error" => true, "msg" => "ID requerido para actualizar"];
         }
 
-        // Obtener el producto actual
-        $product = $this->productModel->getOne($data->id);
-        if($product["error"]) return $product;
+        // 2. Asegurarnos de que data sea un objeto (por seguridad)
+        $data = (object) $data;
 
-        // Verificar que el usuario que hace la petición es el propietario
-        if($product["msg"]["usuario_registro"] !== $data->usuario_id) {
-            return ["error" => true, "msg" => "No tienes permiso para modificar este producto"];
-        }
+        // 3. Pasamos la data directamente al modelo.
+        // El modelo se encargará de filtrar los campos y armar el SQL dinámico.
+        $resultado = $this->productModel->update($data->id, $data);
 
-        return $this->productModel->update($data->id, $data);
+        return $resultado;
     }
 
     // DELETE: Eliminar producto por ID

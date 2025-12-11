@@ -67,8 +67,8 @@
 
             <!-- Acciones -->
             <td>
-              <!-- Solo mostrar editar/eliminar si el usuario actual es quien creó el producto -->
-              <a *ngIf="currentUser?.id === p.usuario_registro"
+              <!-- Solo mostrar editar/eliminar si el usuario actual puede -->
+              <a *ngIf="canEditProduct(p)"
                  [routerLink]="['/products/edit', p.id!]" 
                  class="btn-icon" 
                  title="Editar">
@@ -87,7 +87,7 @@
                 </svg>
               </a>
 
-              <button *ngIf="currentUser?.id === p.usuario_registro"
+              <button *ngIf="canEditProduct(p)"
                       (click)="deleteProduct(p.id!)" 
                       class="btn-icon" 
                       title="Eliminar">

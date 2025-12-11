@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { ProductsService } from '../../../services/products.service';
 import { UiAlertService } from '../../../services/ui-alert.service';
-import { HeaderComponent } from "../../../shared/header/header.component";
+import { HeaderComponent } from '../../../shared/header/header.component';
 
 @Component({
   selector: 'app-product-form',
@@ -47,15 +47,14 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // detecta si es modo edicion obteniendo el id desde la ruta
-    this.productId = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(params => {
+  this.productId = params.get('id');
+  this.isEditMode = !!this.productId;
 
-    if (this.productId) {
-      this.isEditMode = true;
-      this.loadProductData(this.productId); // carga datos del producto para editar
-    } else {
-      this.isEditMode = false; // modo creacion
-    }
+  if (this.isEditMode && this.productId) {
+    this.loadProductData(this.productId);
+  }
+});
   }
 
   // carga los datos de un producto por id y llena el formulario
