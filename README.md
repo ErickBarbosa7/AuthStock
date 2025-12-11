@@ -21,6 +21,18 @@ Microservicio encargado del inventario puro.
 * **Función:** Es un CRUD de productos.
 
 ### 4. `Integracion-Pipedream` (Servicio de Notificaciones)
-Microservicio para el manejo de eventos asíncronos.
+Microservicio para el manejo de eventos asíncronos y seguridad.
 * **Tecnologías:** Pipedream, .NET.
-* **Función:** Recibe eventos desde los backends y envía notificaciones automáticas por correo.
+* **Función:** Gestiona el envío de correos,  el **envío del código de recuperación de contraseña** al correo del usuario y la **verificación** posterior del código para autorizar el cambio de contraseña.
+  
+# Mis Flujos de Pipedream
+
+### Check Code
+<p align="center">
+  <img src="docs/Flujo-CheckCode.png" alt="Flujo CheckCode" width="700"/>
+</p>
+
+### Send Code
+<p align="center">
+  <img src="docs/Flujo-SendCode.png" alt="Flujo SendCode" width="700"/>
+</p>
