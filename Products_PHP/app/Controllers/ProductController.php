@@ -43,17 +43,36 @@ class ProductController {
             return ["error" => true, "msg" => "ID requerido para actualizar"];
         }
 
-        return $this->productModel->update($data->id, $data); // Actualiza un producto
+        // Obtener el producto actual
+        $product = $this->productModel->getOne($data->id);
+        if($product["error"]) return $product;
+
+        // Verificar que el usuario que hace la petición es el propietario
+        if($product["msg"]["usuario_registro"] !== $data->usuario_id) {
+            return ["error" => true, "msg" => "No tienes permiso para modificar este producto"];
+        }
+
+        return $this->productModel->update($data->id, $data);
     }
 
     // DELETE: Eliminar producto por ID
     public function destroy($data) {
-        $id = is_object($data) ? ($data->id ?? null) : $data; // Igual que show(), obtiene el ID
-        
+        $id = is_object($data) ? ($data->id ?? null) : $data;
+        $usuario_id = is_object($data) ? ($data->usuario_id ?? null) : null;
+
         if(!$id) return ["error" => true, "msg" => "ID requerido para eliminar"];
 
-        return $this->productModel->delete($id); // Elimina el registro
+        $product = $this->productModel->getOne($id);
+        if($product["error"]) return $product;
+
+        // Verificar propiedad
+        if($product["msg"]["usuario_registro"] !== $usuario_id) {
+            return ["error" => true, "msg" => "No tienes permiso para eliminar este producto"];
+        }
+
+        return $this->productModel->delete($id);
     }
+
 
     // Genera un UUID v4 
     private function generateUuid() {
