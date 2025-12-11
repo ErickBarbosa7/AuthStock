@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<div class="profile-background">
+  <div class="profile-container">
+    <h2>Editar Perfil</h2>
+
+    <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" [(ngModel)]="user.nombre" required class="form-control"/>
+      </div>
+
+      <!-- Apellidos -->
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" name="apellidos" [(ngModel)]="user.apellidos" required class="form-control"/>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" name="telefono" [(ngModel)]="user.telefono" class="form-control"/>
+      </div>
+
+      <!-- Botones -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="profileForm.invalid">Guardar Cambios</button>
+        <button type="button" class="btn-secondary" (click)="cancel()">Cancelar</button>
+      </div>
+
+    </form>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+$color1: #fcfdeb; // Crema
+$color2: #e3cebd; // Beige
+$color3: #c1a2a0; // Texto secundario
+$color4: #725b75; // Púrpura medio
+$color5: #322030; // Púrpura oscuro
+
+.main-container {
+  min-height: 100vh;
+  background-color: $color1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.top-bar {
+  background-color: $color5;
+  color: $color1;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 { margin: 0; font-size: 1.5rem; }
+  
+  .btn-back {
+    color: $color2;
+    text-decoration: none;
+    font-weight: 600;
+    &:hover { color: white; text-decoration: underline; }
+  }
+}
+  h2 {
+    margin: 0 0 1.5rem 0;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: $color5;
+    text-align: center;
+    border-bottom: 2px solid lighten($color2, 10%);
+    padding-bottom: 0.5rem;
+  }
+.content-wrapper {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  border: 1px solid rgba($color2, 0.4);
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  &.full-width { width: 100%; margin-top: 1rem; }
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $color4;
+    margin-bottom: 5px;
+  }
+
+  input, select, textarea {
+    padding: 12px;
+    border: 1px solid $color2;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fafafa;
+    color: $color5;
+    transition: all 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: $color4;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba($color4, 0.1);
+    }
+  }
+}
+
+// Input especial para dinero
+.money-input {
+  position: relative;
+  input { padding-left: 25px; width: 100%; box-sizing: border-box; }
+  span {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $color3;
+    font-weight: bold;
+  }
+}
+
+.form-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+
+  button {
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s;
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid $color3;
+    color: $color4;
+    &:hover { background: fade-out($color3, 0.9); }
+  }
+
+  .btn-save {
+    background-color: $color5;
+    color: white;
+    box-shadow: 0 4px 10px rgba($color5, 0.3);
+    &:hover { background-color: lighten($color5, 5%); }
+  }
+}

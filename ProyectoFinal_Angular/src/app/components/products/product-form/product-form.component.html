@@ -1,0 +1,113 @@
+<div class="main-container">
+  
+  <app-header/>
+
+  <div class="content-wrapper">
+    
+    <div class="form-card">
+      <h2>Crear Producto</h2>
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-row">
+          <div class="input-group">
+            <label for="nombre">Nombre del Producto</label>
+            <input 
+              type="text" 
+              id="nombre" 
+              formControlName="nombre" 
+              placeholder="Ej. Laptop Dell"
+            >
+            <small *ngIf="isFieldInvalid('nombre')" style="color: #c1a2a0; margin-top: 5px;">
+              Nombre requerido (min 3 letras).
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label for="sku">SKU / Código</label>
+            <input 
+              type="text" 
+              id="sku" 
+              formControlName="sku" 
+              placeholder="Ej. LP-001"
+            >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" formControlName="categoria">
+              <option *ngFor="let c of categorias" [value]="c">
+                {{ c }}
+              </option>
+            </select>
+          </div>
+
+
+
+          <div class="input-group">
+            <label for="marca">Marca</label>
+            <input 
+              type="text" 
+              id="marca" 
+              formControlName="marca" 
+              placeholder="Dell"
+            >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="input-group">
+            <label for="precio">Precio Unitario</label>
+            <div class="money-input">
+              <span>$</span>
+              <input 
+                type="number" 
+                id="precio" 
+                formControlName="precio" 
+                placeholder="0.00"
+              >
+            </div>
+            <small *ngIf="isFieldInvalid('precio')" style="color: #c1a2a0; margin-top: 5px;">
+              Requerido.
+            </small>
+          </div>
+
+          <div class="input-group">
+            <label for="stock">Stock Disponible</label>
+            <input 
+              type="number" 
+              id="stock" 
+              formControlName="stock" 
+              placeholder="0"
+            >
+             <small *ngIf="isFieldInvalid('stock')" style="color: #c1a2a0; margin-top: 5px;">
+              Requerido.
+            </small>
+          </div>
+        </div>
+
+        <div class="input-group full-width">
+          <label for="descripcion">Descripción Detallada</label>
+          <textarea 
+            id="descripcion" 
+            rows="4" 
+            formControlName="descripcion" 
+            placeholder="Escribe aquí los detalles..."
+          ></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" routerLink="/products">
+            Cancelar
+          </button>
+          
+          <button type="submit" class="btn-save" [disabled]="productForm.invalid">
+            {{ isEditMode ? 'Guardar Cambios' : 'Registrar Producto' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+$color1: #fcfdeb;
+$color2: #e3cebd;
+$color3: #c1a2a0;
+$color4: #725b75;
+$color5: #322030;
+
+.main-container {
+  min-height: 100vh;
+  background-color: $color1;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+
+.content-wrapper {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .subtitle { color: $color4; margin: 0; }
+  
+  .btn-primary {
+    background-color: $color4;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover { background-color: $color5; }
+  }
+}
+
+.table-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      background-color: lighten($color2, 10%);
+      color: $color5;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      color: #555;
+    }
+
+    tr:hover { background-color: #fafafa; }
+
+    .product-name { font-weight: bold; color: $color5; }
+    .sku { color: $color3; font-size: 0.8rem; }
+    .price { font-weight: bold; color: green; }
+    .low-stock { color: red; font-weight: bold; }
+    
+    .badge {
+      background: lighten($color3, 20%);
+      color: $color5;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .btn-icon {
+      background: none; border: none; cursor: pointer; font-size: 1.2rem;
+      margin-right: 10px;
+      transition: transform 0.2s;
+      &:hover { transform: scale(1.2); }
+    }
+  }
+}
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    background-color: $color4;
+    color: $color1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+}
+
+
+.empty-state, .loading-state {
+  text-align: center;
+  padding: 40px;
+  color: $color3;
+  font-size: 1.2rem;
+}

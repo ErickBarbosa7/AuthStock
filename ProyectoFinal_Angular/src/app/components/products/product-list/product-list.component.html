@@ -1,0 +1,114 @@
+<app-header></app-header>
+
+<div class="main-container">
+
+  <div class="content-wrapper">
+    
+    <div class="toolbar">
+      <h2 class="subtitle">Lista de productos</h2>
+      <a routerLink="/products/create" class="btn-primary">
+         Nuevo Producto
+      </a>
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container" *ngIf="products && products.length > 0; else emptyState">
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Marca</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th>Registrado Por</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of products">
+            
+            <!-- Nombre y SKU -->
+            <td>
+              <div class="product-name">{{ p.nombre }}</div>
+              <div class="sku">{{ p.sku || 'Sin SKU' }}</div>
+            </td>
+
+            <!-- Categoria -->
+            <td>
+              <span class="badge">{{ p.categoria || 'Sin categoría' }}</span>
+            </td>
+
+            <!-- Marca -->
+            <td>{{ p.marca || 'Sin marca' }}</td>
+
+            <!-- Precio -->
+            <td class="price">${{ p.precio | number:'1.2-2' }}</td>
+
+            <!-- Stock -->
+            <td [class.low-stock]="p.stock < 5">
+              {{ p.stock }} un.
+            </td>
+
+            <!-- Usuario -->
+            <td>
+              <div class="user-badge" *ngIf="userNames[p.usuario_registro]; else noUser">
+                <div class="avatar">{{ getInitials(userNames[p.usuario_registro]) }}</div>
+                <span>{{ userNames[p.usuario_registro] }}</span>
+              </div>
+
+              <ng-template #noUser>
+                <div class="avatar">N/A</div>
+                <small style="font-size:10px; color:#ccc;">
+                  {{ p.usuario_registro | slice:0:6 }}...
+                </small>
+              </ng-template>
+            </td>
+
+            <!-- Acciones -->
+            <td>
+              <!-- Solo mostrar editar/eliminar si el usuario actual es quien creó el producto -->
+              <a *ngIf="currentUser?.id === p.usuario_registro"
+                 [routerLink]="['/products/edit', p.id!]" 
+                 class="btn-icon" 
+                 title="Editar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                  <g fill="none" stroke="#eab308" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                    <path stroke-dasharray="20" stroke-dashoffset="20" d="M3 21h18">
+                      <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.2s" values="20;0"/>
+                    </path>
+                    <path stroke-dasharray="48" stroke-dashoffset="48" d="M7 17v-4l10 -10l4 4l-10 10h-4">
+                      <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.2s" dur="0.6s" values="48;0"/>
+                    </path>
+                    <path stroke-dasharray="8" stroke-dashoffset="8" d="M14 6l4 4">
+                      <animate fill="freeze" attributeName="stroke-dashoffset" begin="0.8s" dur="0.2s" values="8;0"/>
+                    </path>
+                  </g>
+                </svg>
+              </a>
+
+              <button *ngIf="currentUser?.id === p.usuario_registro"
+                      (click)="deleteProduct(p.id!)" 
+                      class="btn-icon" 
+                      title="Eliminar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                  <path fill="#dc2626" d="M7.616 20q-.691 0-1.153-.462T6 18.384V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.153T16.384 20zm2.192-3h1V8h-1zm3.384 0h1V8h-1z"/>
+                </svg>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ESTADO VACÍO -->
+    <ng-template #emptyState>
+      <div class="empty-state">
+        <p>No hay productos registrados actualmente.</p>
+      </div>
+    </ng-template>
+
+  </div>
+
+</div>

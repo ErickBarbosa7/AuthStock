@@ -1,0 +1,48 @@
+<div class="split-screen">
+  
+  <div class="left-pane">
+    <div class="brand-content">
+      <h1>Seguridad</h1>
+      <p>Verificación de identidad</p>
+      <div class="decorative-line"></div>
+    </div>
+  </div>
+
+  <div class="right-pane">
+    <div class="login-container">
+      
+      <div class="header-text">
+        <h2>Código Enviado</h2>
+        <p class="subtitle">Revisa tu WhatsApp/Email e ingresa el código</p>
+      </div>
+
+      <form (ngSubmit)="onVerify()">
+        
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="code" 
+            [(ngModel)]="code" 
+            name="code" 
+            required 
+            placeholder=" " 
+            maxlength="6"
+            style="letter-spacing: 8px; text-align: center; font-weight: bold; font-size: 1.5rem;"
+          >
+          <label for="code" style="left: 50%; transform: translateX(-50%); width: 100%; text-align: center;">
+            Código de 6 dígitos
+          </label>
+        </div>
+
+        <button type="submit" class="btn-minimal">
+          Verificar Código <span class="arrow">→</span>
+        </button>
+
+      </form>
+
+      <div class="footer">
+        <p>¿No lo recibiste? <a routerLink="/recover-password">Reenviar</a></p>
+      </div>
+    </div>
+  </div>
+</div>
